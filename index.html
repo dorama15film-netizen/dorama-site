@@ -3,758 +3,857 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="theme-color" content="#0b0e14">
-    <title>Дорамы от Дианы</title>
+    <meta name="theme-color" content="#0a0a0f">
+    <title>Дорамы от Дианы — Смотреть онлайн</title>
     <link rel="icon" href="images/Log.png" type="image/png">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         :root {
-            --bg: #0b0e14;
-            --bg-card: #151b24;
-            --bg-sidebar: #0f141c;
-            --text: #f0f2f5;
-            --text-muted: #8892a8;
-            --border: #2a313f;
-            --accent: #f1c40f;
-            --accent-hover: #f39c12;
-
-            --cat-bg: #000000;
-            --cat-bg-hover: #0a0a0a;
-            --cat-bg-active: #1d4a2e;
-            --cat-color: #4d9fff;
-            --cat-color-hover: #7ab8ff;
-            --cat-color-active: #a8ffcc;
-            --cat-border: #ff2a2a;
-            --cat-border-hover: #ff4d4d;
-            --cat-border-active: #2ecc71;
-            --cat-glow: rgba(255, 42, 42, 0.5);
-            --cat-glow-blue: rgba(77, 159, 255, 0.5);
-            --cat-glow-green: rgba(46, 204, 113, 0.6);
+            --bg: #0a0a0f;
+            --bg-elevated: #12121a;
+            --bg-card: #16161f;
+            --bg-hover: #1e1e2a;
+            --text: #f5f5f7;
+            --text-secondary: #a0a0b0;
+            --text-muted: #6a6a7a;
+            --border: #252532;
+            --accent: #7c5cff;
+            --accent-hover: #9375ff;
+            --accent-soft: rgba(124, 92, 255, 0.15);
+            --success: #2ecc71;
+            --danger: #ff4757;
+            --warning: #ffa502;
+            --star: #ffc107;
+            --radius-sm: 8px;
+            --radius-md: 14px;
+            --radius-lg: 20px;
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.5);
+            --transition: 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         [data-theme="light"] {
-            --bg: #e8f4f8;
+            --bg: #f7f7fa;
+            --bg-elevated: #ffffff;
             --bg-card: #ffffff;
-            --bg-sidebar: #d4ecf5;
-            --text: #1a2a3a;
-            --text-muted: #5a7a8a;
-            --border: #90c4d4;
-            --accent: #00bcd4;
-            --accent-hover: #0097a7;
-
-            --cat-bg: #0a0a0a;
-            --cat-bg-hover: #1a1a1a;
-            --cat-bg-active: #1d7a3e;
-            --cat-color: #4d9fff;
-            --cat-color-hover: #7ab8ff;
-            --cat-color-active: #c8ffdc;
-            --cat-border: #e60000;
-            --cat-border-hover: #ff3333;
-            --cat-border-active: #2ecc71;
-            --cat-glow: rgba(230, 0, 0, 0.5);
-            --cat-glow-blue: rgba(77, 159, 255, 0.5);
-            --cat-glow-green: rgba(46, 204, 113, 0.6);
+            --bg-hover: #f0f0f5;
+            --text: #1a1a2e;
+            --text-secondary: #5a5a6e;
+            --text-muted: #9a9aae;
+            --border: #e5e5ed;
+            --accent: #6c4ce0;
+            --accent-hover: #7d5eeb;
+            --accent-soft: rgba(108, 76, 224, 0.1);
+            --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 16px 48px rgba(0, 0, 0, 0.12);
         }
 
         html, body {
             background: var(--bg);
             color: var(--text);
-            font-family: system-ui, -apple-system, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
             width: 100%;
             min-height: 100vh;
-            min-height: 100dvh;
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
 
         body { display: flex; flex-direction: column; }
 
-        .zoom-wrap {
-            width: 100%;
+        /* ===== ШАПКА САЙТА ===== */
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 10, 15, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+            padding: 16px 32px;
             display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            min-height: 100dvh;
+            align-items: center;
+            gap: 24px;
         }
 
-        .desktop-wrap {
-            width: 1300px;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-            min-height: 100dvh;
-            transform-origin: top left;
+        [data-theme="light"] .site-header {
+            background: rgba(247, 247, 250, 0.85);
         }
 
-        /* ===== ШАПКА ===== */
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--accent), #ff6bcb);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            box-shadow: 0 4px 16px rgba(124, 92, 255, 0.4);
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, var(--accent), #ff6bcb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 8px;
+            margin-left: auto;
+            align-items: center;
+        }
+
+        .header-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text);
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            font-family: inherit;
+        }
+
+        .header-btn:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
+        }
+
+        .header-btn.active {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
+        }
+
+        .header-btn .badge {
+            background: var(--danger);
+            color: white;
+            border-radius: 10px;
+            padding: 1px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            min-width: 20px;
+            text-align: center;
+        }
+
+        /* ===== HERO-БЛОК ===== */
         .hero {
             position: relative;
-            width: 100%;
-            height: 45vh;
-            min-height: 280px;
+            height: 420px;
             overflow: hidden;
-            flex-shrink: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 40px 32px;
         }
 
-        .hero img {
+        .hero-img {
+            position: absolute;
+            inset: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            object-position: center;
-            display: block;
+            object-position: center 30%;
         }
 
         .hero-overlay {
             position: absolute;
             inset: 0;
             background: linear-gradient(
-                to bottom,
-                rgba(0, 0, 0, 0.3) 0%,
-                rgba(0, 0, 0, 0.1) 40%,
-                rgba(11, 14, 20, 0.95) 100%
+                135deg,
+                rgba(10, 10, 15, 0.95) 0%,
+                rgba(10, 10, 15, 0.7) 50%,
+                rgba(10, 10, 15, 0.3) 100%
+            );
+        }
+
+        [data-theme="light"] .hero-overlay {
+            background: linear-gradient(
+                135deg,
+                rgba(247, 247, 250, 0.95) 0%,
+                rgba(247, 247, 250, 0.6) 50%,
+                rgba(247, 247, 250, 0.2) 100%
             );
         }
 
         .hero-content {
-            position: absolute;
-            bottom: 24px;
-            left: 24px;
-            right: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            flex-wrap: wrap;
+            position: relative;
             z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--accent-soft);
+            color: var(--accent);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            border: 1px solid var(--accent);
         }
 
         .hero-title {
-            font-size: 32px;
-            font-weight: 800;
-            color: #fff;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
-            letter-spacing: 0.5px;
+            font-size: 48px;
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -1.5px;
+            margin-bottom: 12px;
         }
 
-        .hero-title span { color: var(--accent); }
-
-        .theme-btn {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border: 2px solid var(--accent);
-            color: #fff;
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            transition: 0.2s;
-            flex-shrink: 0;
+        .hero-title .gradient {
+            background: linear-gradient(135deg, var(--accent), #ff6bcb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
-        .theme-btn:hover {
-            transform: scale(1.1);
-            background: rgba(241, 196, 15, 0.2);
+        .hero-desc {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 24px;
         }
 
-        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
-        .layout {
-            flex: 1;
-            display: grid;
-            grid-template-columns: 1fr 460px;
-            gap: 24px;
-            width: 100%;
-            padding: 24px;
-            align-items: start;
-        }
-
-        .content {
-            min-width: 0;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* ===== ИЗБРАННОЕ ===== */
-        .favorites-bar {
-            margin-bottom: 16px;
-            flex-shrink: 0;
+        .hero-actions {
             display: flex;
             gap: 12px;
             flex-wrap: wrap;
         }
 
-        .favorites-btn {
-            background: #000;
-            border: 3px solid var(--cat-border);
-            border-radius: 12px;
-            color: var(--cat-color);
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+            border: none;
             padding: 14px 28px;
-            font-size: 18px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            transition: var(--transition);
             font-family: inherit;
             display: flex;
             align-items: center;
-            gap: 10px;
-            text-shadow:
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000,
-                0 0 8px var(--cat-glow-blue);
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(124, 92, 255, 0.4);
         }
 
-        .favorites-btn:hover {
-            background: var(--cat-bg-hover);
-            border-color: var(--cat-border-hover);
-            box-shadow: 0 0 18px var(--cat-glow);
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(124, 92, 255, 0.5);
         }
 
-        .favorites-btn.active {
-            background: var(--cat-bg-active);
-            color: var(--cat-color-active);
-            border-color: var(--cat-border-active);
-            box-shadow: 0 0 20px var(--cat-glow-green);
-        }
-
-        .favorites-btn .badge {
-            background: var(--cat-border);
-            color: #000;
-            border-radius: 20px;
-            padding: 2px 12px;
-            font-size: 14px;
-            min-width: 26px;
-            text-align: center;
-            font-weight: 800;
-        }
-
-        .favorites-btn.active .badge {
-            background: var(--cat-border-active);
-        }
-
-        .reset-btn {
-            background: #000;
-            border: 3px solid var(--cat-border);
-            border-radius: 12px;
-            color: var(--cat-color);
+        .btn-secondary {
+            background: var(--bg-elevated);
+            color: var(--text);
+            border: 1px solid var(--border);
             padding: 14px 28px;
-            font-size: 16px;
+            border-radius: var(--radius-md);
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
-            transition: 0.2s;
+            transition: var(--transition);
             font-family: inherit;
-            display: none;
-            align-items: center;
-            gap: 10px;
-            text-shadow:
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000,
-                0 0 8px var(--cat-glow-blue);
         }
 
-        .reset-btn:hover {
-            background: var(--cat-bg-hover);
-            border-color: var(--cat-border-hover);
-            box-shadow: 0 0 18px var(--cat-glow);
+        .btn-secondary:hover {
+            background: var(--bg-hover);
+            border-color: var(--accent);
         }
 
-        .reset-btn.visible {
+        /* ===== ОСНОВНОЙ КОНТЕЙНЕР ===== */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 32px;
+            padding: 32px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .content-area {
             display: flex;
+            flex-direction: column;
+            gap: 24px;
+            min-width: 0;
         }
 
         /* ===== ПОИСК ===== */
-        .search-section {
-            margin-bottom: 20px;
-            flex-shrink: 0;
-        }
-
-        .search-wrapper {
-            width: 100%;
+        .search-box {
             position: relative;
-            overflow: hidden;
-            border-radius: 50px;
-        }
-
-        .search-wrapper input {
             width: 100%;
-            padding: 14px 140px 14px 28px;
-            background: var(--bg-card);
-            border: 3px solid #ff0000;
-            border-radius: 50px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 16px 60px 16px 52px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             color: var(--text);
-            font-size: 19px;
-            font-family: system-ui, -apple-system, sans-serif;
+            font-size: 15px;
+            font-family: inherit;
             outline: none;
-            transition: 0.3s ease;
-            box-shadow: 0 0 30px rgba(255, 0, 0, 0.15);
-            height: 60px;
+            transition: var(--transition);
         }
 
-        .search-wrapper input::placeholder {
+        .search-box input::placeholder {
             color: var(--text-muted);
-            font-size: 17px;
         }
 
-        .search-wrapper input:focus {
-            border-color: #ff3333;
-            box-shadow: 0 0 40px rgba(255, 0, 0, 0.25);
+        .search-box input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-soft);
         }
 
-        .search-wrapper .search-btn {
+        .search-box .search-icon {
             position: absolute;
-            right: 8px;
+            left: 18px;
             top: 50%;
             transform: translateY(-50%);
-            background: #ff0000;
+            font-size: 18px;
+            color: var(--text-muted);
+            pointer-events: none;
+        }
+
+        .search-box .search-btn {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--accent);
             border: none;
-            color: #fff;
-            padding: 10px 28px;
-            border-radius: 40px;
+            color: white;
+            padding: 10px 20px;
+            border-radius: var(--radius-sm);
+            font-size: 14px;
             font-weight: 700;
-            font-size: 15px;
             cursor: pointer;
-            font-family: system-ui, -apple-system, sans-serif;
-            letter-spacing: 0.5px;
-            height: 44px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .search-box .search-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* ===== СЕКЦИЯ ===== */
+        .section-header {
             display: flex;
             align-items: center;
-            justify-content: center;
-            z-index: 10;
-            white-space: nowrap;
-            transition: right 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55),
-                        background 0.5s ease,
-                        box-shadow 0.5s ease;
+            justify-content: space-between;
+            margin-bottom: 4px;
         }
 
-        .search-wrapper .search-btn:hover {
-            background: #cc0000;
+        .section-title {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
         }
 
-        .search-wrapper .search-btn.animating {
-            right: calc(100% - 140px);
-            background: #00cc44;
-            box-shadow: 0 0 40px rgba(0, 204, 68, 0.4);
-        }
-
-        .search-wrapper .search-btn.returning {
-            right: 8px;
-            background: #ff0000;
-        }
-
-        /* ===== СЕТКА ===== */
-        .grid {
+        /* ===== СЕТКА КАРТОЧЕК ===== */
+        .movies-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 24px;
-            align-content: start;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
         }
 
         /* ===== КАРТОЧКА ===== */
-        .card {
+        .movie-card {
             background: var(--bg-card);
-            border: 3px solid var(--cat-border);
-            border-radius: 18px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
             overflow: hidden;
             cursor: pointer;
-            transition: 0.25s;
+            transition: var(--transition);
             display: flex;
             flex-direction: column;
             position: relative;
-            box-shadow: 0 0 18px rgba(255, 42, 42, 0.25);
+            box-shadow: var(--shadow-sm);
         }
 
-        .card:hover {
+        .movie-card:hover {
             transform: translateY(-6px);
-            border-color: var(--cat-border-hover);
-            box-shadow: 0 0 35px var(--cat-glow);
+            border-color: var(--accent);
+            box-shadow: var(--shadow-lg), 0 0 0 1px var(--accent);
         }
 
-        .card-poster-wrap {
+        .movie-poster {
             position: relative;
             width: 100%;
-            aspect-ratio: 3 / 4;
+            aspect-ratio: 2 / 3;
             overflow: hidden;
-            background: #1a212b;
+            background: var(--bg-elevated);
         }
 
-        .card-poster-wrap img {
+        .movie-poster img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
+            transition: var(--transition);
         }
 
-        .card-rating {
+        .movie-card:hover .movie-poster img {
+            transform: scale(1.05);
+        }
+
+        /* Рейтинг */
+        .movie-rating {
             position: absolute;
             top: 12px;
             left: 12px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 3px solid var(--accent);
-            border-radius: 24px;
-            padding: 6px 14px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 6px 12px;
+            border-radius: 20px;
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 17px;
+            gap: 4px;
+            font-size: 13px;
             font-weight: 800;
-            color: var(--accent);
-            z-index: 3;
-            text-shadow: 0 0 8px rgba(241, 196, 15, 0.8);
-            box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+            color: var(--star);
+            z-index: 2;
         }
 
-        .card-rating .star {
-            color: var(--accent);
-            font-size: 18px;
-        }
-
-        .card-fav {
+        /* Сердечко */
+        .movie-fav {
             position: absolute;
             top: 12px;
             right: 12px;
-            background: rgba(0, 0, 0, 0.9);
-            border: 3px solid var(--cat-border);
+            width: 40px;
+            height: 40px;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(8px);
+            border: none;
             border-radius: 50%;
-            width: 52px;
-            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
-            z-index: 3;
-            transition: 0.2s;
-            font-size: 26px;
-            color: #fff;
-            user-select: none;
-            box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+            font-size: 18px;
+            z-index: 2;
+            transition: var(--transition);
         }
 
-        .card-fav:hover {
-            transform: scale(1.15);
-            border-color: var(--cat-border-hover);
-            box-shadow: 0 0 20px var(--cat-glow);
+        .movie-fav:hover {
+            transform: scale(1.1);
+            background: rgba(0, 0, 0, 0.95);
         }
 
-        .card-fav.favorited {
-            background: rgba(255, 42, 42, 0.4);
-            border-color: var(--cat-border);
-            color: #ff2a2a;
-            box-shadow: 0 0 25px var(--cat-glow);
+        .movie-fav.favorited {
+            background: rgba(255, 71, 87, 0.95);
+            animation: pulse 0.3s ease;
         }
 
-        .card-title {
-            padding: 18px 18px 12px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: 800;
-            color: var(--cat-color);
-            line-height: 1.35;
-            min-height: 76px;
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .movie-info {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .movie-title {
+            font-size: 17px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .movie-meta {
+            display: flex;
+            gap: 8px;
+            font-size: 13px;
+            color: var(--text-muted);
+            flex-wrap: wrap;
+        }
+
+        .movie-meta span {
             display: flex;
             align-items: center;
-            justify-content: center;
-            text-shadow:
-                -2px -2px 0 #000,
-                2px -2px 0 #000,
-                -2px 2px 0 #000,
-                2px 2px 0 #000,
-                -2px 0 0 #000,
-                2px 0 0 #000,
-                0 -2px 0 #000,
-                0 2px 0 #000,
-                0 0 10px var(--cat-glow-blue);
+            gap: 4px;
         }
 
-        .card-watch-btn {
+        .movie-watch-btn {
             display: block;
-            margin: 10px 18px 18px;
-            padding: 18px 16px;
-            background: #000;
-            border: 3px solid var(--cat-border);
-            border-radius: 12px;
-            color: var(--cat-color);
-            font-size: 18px;
-            font-weight: 800;
+            margin-top: auto;
+            padding: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            color: var(--text);
+            font-size: 14px;
+            font-weight: 700;
             text-align: center;
             text-decoration: none;
-            cursor: pointer;
-            transition: 0.2s;
+            transition: var(--transition);
             font-family: inherit;
-            letter-spacing: 0.3px;
-            text-shadow:
-                -1.5px -1.5px 0 #000,
-                1.5px -1.5px 0 #000,
-                -1.5px 1.5px 0 #000,
-                1.5px 1.5px 0 #000,
-                0 0 8px var(--cat-glow-blue);
+            cursor: pointer;
         }
 
-        .card-watch-btn:hover {
-            background: var(--cat-bg-hover);
-            border-color: var(--cat-border-hover);
-            box-shadow: 0 0 22px var(--cat-glow);
-            transform: scale(1.02);
+        .movie-watch-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: white;
         }
 
         /* ===== САЙДБАР ===== */
         .sidebar {
-            background: var(--bg-sidebar);
-            border: 2px solid var(--cat-border);
-            border-radius: 16px;
-            padding: 26px 22px;
-            box-shadow: 0 0 30px rgba(255, 42, 42, 0.15);
+            position: sticky;
+            top: 90px;
+            height: fit-content;
+            max-height: calc(100vh - 120px);
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
         }
 
         .sidebar-title {
-            font-size: 34px;
+            font-size: 16px;
             font-weight: 800;
-            color: var(--cat-color);
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 22px;
-            padding-bottom: 18px;
-            border-bottom: 2px solid var(--cat-border);
-            text-align: center;
-            text-shadow:
-                0 0 10px var(--cat-glow-blue),
-                0 0 20px var(--cat-glow);
+            letter-spacing: 1px;
+            color: var(--text-secondary);
         }
 
         .sidebar-nav {
+            padding: 12px;
+            overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 9px;
+            gap: 2px;
+            flex: 1;
+            min-height: 0;
         }
 
-        .sidebar-item {
-            display: block;
-            padding: 20px 26px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 28px;
-            font-weight: 700;
+        /* Скроллбар */
+        .sidebar-nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        .sidebar-nav::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .sidebar-nav::-webkit-scrollbar-thumb {
+            background: var(--border);
+            border-radius: 3px;
+        }
+        .sidebar-nav::-webkit-scrollbar-thumb:hover {
+            background: var(--accent);
+        }
+
+        .category-item {
+            padding: 10px 14px;
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-sm);
             cursor: pointer;
-            transition: 0.2s ease;
-            border: 4px solid var(--cat-border);
-            background: var(--cat-bg);
-            color: var(--cat-color);
-            line-height: 1.35;
-            text-align: center;
-            letter-spacing: 0.3px;
-            text-shadow:
-                -1.5px -1.5px 0 #000,
-                1.5px -1.5px 0 #000,
-                -1.5px 1.5px 0 #000,
-                1.5px 1.5px 0 #000,
-                0 0 8px var(--cat-glow-blue);
+            transition: var(--transition);
+            text-decoration: none;
+            display: block;
+            border-left: 3px solid transparent;
         }
 
-        .sidebar-item:hover {
-            background: var(--cat-bg-hover);
-            border-color: var(--cat-border-hover);
-            color: var(--cat-color-hover);
-            box-shadow: 0 0 18px var(--cat-glow);
+        .category-item:hover {
+            background: var(--bg-hover);
+            color: var(--text);
+            border-left-color: var(--accent);
         }
 
-        .sidebar-item.active {
-            background: var(--cat-bg-active);
-            color: var(--cat-color-active);
-            border-color: var(--cat-border-active);
-            box-shadow: 0 0 20px var(--cat-glow-green);
-            font-weight: 800;
+        .category-item.active {
+            background: var(--accent-soft);
+            color: var(--accent);
+            border-left-color: var(--accent);
         }
 
-        .sidebar-divider {
-            height: 3px;
-            background: #000;
-            opacity: 0.4;
-            margin: 14px 4px;
-            border-radius: 2px;
+        .category-divider {
+            height: 1px;
+            background: var(--border);
+            margin: 8px 4px;
         }
 
-        /* ===== ПУСТОЙ РЕЗУЛЬТАТ ===== */
-        .no-results {
+        /* ===== ПУСТОЕ СОСТОЯНИЕ ===== */
+        .empty-state {
             grid-column: 1 / -1;
             text-align: center;
-            padding: 60px 20px;
+            padding: 80px 20px;
             color: var(--text-muted);
-            font-size: 20px;
         }
 
-        .no-results .icon {
-            font-size: 60px;
-            display: block;
+        .empty-state .icon {
+            font-size: 64px;
             margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .empty-state .title {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
         }
 
         /* ===== ПОДВАЛ ===== */
-        footer {
-            padding: 24px;
-            background: var(--bg-card);
+        .site-footer {
+            padding: 32px;
             border-top: 1px solid var(--border);
             text-align: center;
             color: var(--text-muted);
             font-size: 14px;
-            flex-shrink: 0;
-            margin-top: auto;
+            margin-top: 32px;
         }
 
-        footer a {
+        .site-footer a {
             color: var(--accent);
             text-decoration: none;
+            font-weight: 600;
         }
 
         /* ===== TOAST ===== */
         .toast-container {
             position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
+            bottom: 24px;
+            right: 24px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 12px;
+            z-index: 9999;
         }
 
         .toast {
-            background: #000;
-            border: 3px solid var(--cat-border);
-            border-radius: 12px;
+            background: var(--bg-elevated);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
             padding: 14px 20px;
-            color: var(--cat-color);
-            font-size: 15px;
-            font-weight: 700;
-            box-shadow: 0 0 25px var(--cat-glow);
-            animation: slideIn 0.3s ease;
-            text-shadow:
-                -1px -1px 0 #000,
-                1px -1px 0 #000,
-                -1px 1px 0 #000,
-                1px 1px 0 #000;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            box-shadow: var(--shadow-lg);
+            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.error { border-left: 4px solid var(--danger); }
+        .toast.info { border-left: 4px solid var(--accent); }
+
         @keyframes slideIn {
-            from { transform: translateX(100%); opacity: 0; }
+            from { transform: translateX(120%); opacity: 0; }
             to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* ===== АДАПТИВ ===== */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                padding: 20px;
+            }
+
+            .sidebar {
+                position: static;
+                max-height: 400px;
+                order: -1;
+            }
+
+            .sidebar-nav {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .category-item {
+                border-left: none;
+                border: 1px solid var(--border);
+                flex: 0 0 auto;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .site-header {
+                padding: 12px 16px;
+            }
+
+            .logo { font-size: 18px; }
+            .logo-icon { width: 32px; height: 32px; font-size: 18px; }
+
+            .hero { height: 320px; padding: 24px 16px; }
+            .hero-title { font-size: 32px; }
+            .hero-desc { font-size: 14px; }
+
+            .main-container { padding: 16px; gap: 16px; }
+
+            .movies-grid {
+                grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+                gap: 12px;
+            }
+
+            .movie-info { padding: 12px; }
+            .movie-title { font-size: 14px; }
+            .movie-watch-btn { font-size: 13px; padding: 10px; }
+
+            .header-btn { padding: 8px 12px; font-size: 13px; }
         }
     </style>
 </head>
 <body>
 
-    <div class="zoom-wrap" id="zoomWrap">
-        <div class="desktop-wrap" id="desktopWrap">
+    <!-- ШАПКА -->
+    <header class="site-header">
+        <a href="index.html" class="logo">
+            <div class="logo-icon">🎬</div>
+            <span>Дорамы от Дианы</span>
+        </a>
+        <div class="header-nav">
+            <button class="header-btn" id="favoritesToggle">
+                ❤️ Избранное <span class="badge" id="favCount">0</span>
+            </button>
+            <button class="header-btn" id="themeBtn">
+                🌙
+            </button>
+        </div>
+    </header>
 
-            <div class="hero">
-                <img src="images/wLUEUAnoC6Y.jpg" alt="Дорамы от Дианы" />
-                <div class="hero-overlay"></div>
-                <div class="hero-content">
-                    <h1 class="hero-title">Дорамы <span>от Дианы</span></h1>
-                    <button class="theme-btn" id="themeBtn" title="Переключить тему">🌙</button>
-                </div>
+    <!-- HERO -->
+    <section class="hero">
+        <img class="hero-img" src="images/wLUEUAnoC6Y.jpg" alt="Hero" onerror="this.style.display='none'">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="hero-tag">✨ Новинки каждый день</div>
+            <h1 class="hero-title">Смотри <span class="gradient">дорамы</span> онлайн</h1>
+            <p class="hero-desc">Корейские, китайские, японские и тайские сериалы в хорошем качестве. Бесплатно и без регистрации.</p>
+            <div class="hero-actions">
+                <button class="btn-primary" onclick="document.querySelector('.movies-grid').scrollIntoView({behavior:'smooth'})">
+                    ▶ Смотреть сейчас
+                </button>
+                <button class="btn-secondary" id="resetHeroFilter">
+                    ✕ Сбросить
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ОСНОВНОЙ КОНТЕЙНЕР -->
+    <div class="main-container">
+
+        <div class="content-area">
+
+            <!-- ПОИСК -->
+            <div class="search-box">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="searchInput" placeholder="Найти дораму, фильм, мультик..." autocomplete="off">
+                <button class="search-btn" id="searchBtn">Найти</button>
             </div>
 
-            <div class="layout">
-
-                <div class="content">
-
-                    <div class="favorites-bar">
-                        <button class="favorites-btn" id="favoritesToggle">
-                            ❤️ Избранное <span class="badge" id="favCount">0</span>
-                        </button>
-                        <button class="reset-btn" id="resetFilter">
-                            ✕ Сбросить фильтр
-                        </button>
-                    </div>
-
-                    <div class="search-section">
-                        <div class="search-wrapper">
-                            <input type="text" id="searchInput" placeholder="Поиск..." autocomplete="off" />
-                            <button class="search-btn" id="searchBtn">Найти</button>
-                        </div>
-                    </div>
-
-                    <div class="grid" id="grid"></div>
-
-                </div>
-
-                <aside class="sidebar">
-                    <div class="sidebar-title">Категории</div>
-                    <nav class="sidebar-nav" id="sidebarNav">
-
-                        <a class="sidebar-item active" data-category="all">Все</a>
-
-                        <div class="sidebar-divider"></div>
-
-                        <a class="sidebar-item" data-category="films-2026">Фильмы 2026</a>
-                        <a class="sidebar-item" data-category="best-films-2026">Лучшие фильмы 2026</a>
-                        <a class="sidebar-item" data-category="films-2025">Фильмы 2025</a>
-                        <a class="sidebar-item" data-category="best-films-2025">Лучшие фильмы 2025</a>
-                        <a class="sidebar-item" data-category="films-2024">Фильмы 2024</a>
-                        <a class="sidebar-item" data-category="best-films-2024">Лучшие фильмы 2024</a>
-                        <a class="sidebar-item" data-category="films-2023">Фильмы 2023</a>
-                        <a class="sidebar-item" data-category="anime">Аниме</a>
-                        <a class="sidebar-item" data-category="action">Фильмы боевики</a>
-                        <a class="sidebar-item" data-category="biography">Биографические фильмы</a>
-                        <a class="sidebar-item" data-category="war">Военные фильмы</a>
-                        <a class="sidebar-item" data-category="drama">Драмы</a>
-                        <a class="sidebar-item" data-category="detective">Детективы</a>
-                        <a class="sidebar-item" data-category="documentary">Документальные фильмы</a>
-                        <a class="sidebar-item" data-category="historical">Исторические фильмы</a>
-                        <a class="sidebar-item" data-category="comedy">Комедии</a>
-                        <a class="sidebar-item" data-category="crime">Криминальные фильмы</a>
-                        <a class="sidebar-item" data-category="ru-melodrama">Русские мелодрамы</a>
-                        <a class="sidebar-item" data-category="melodrama">Мелодрамы</a>
-                        <a class="sidebar-item" data-category="cartoon">Мультфильмы</a>
-                        <a class="sidebar-item" data-category="cartoon-series">Мультсериалы</a>
-                        <a class="sidebar-item" data-category="adventure">Приключения</a>
-                        <a class="sidebar-item" data-category="thriller">Триллеры</a>
-                        <a class="sidebar-item" data-category="horror">Фильмы ужасов</a>
-                        <a class="sidebar-item" data-category="sci-fi">Фантастические фильмы</a>
-                        <a class="sidebar-item" data-category="fantasy">Фэнтези фильмы</a>
-                        <a class="sidebar-item" data-category="ru-films">Русские фильмы</a>
-                        <a class="sidebar-item" data-category="best-ru-films">Лучшие Русские фильмы</a>
-
-                        <div class="sidebar-divider"></div>
-
-                        <a class="sidebar-item" data-category="turkish-series">Турецкие сериалы на русском</a>
-                        <a class="sidebar-item" data-category="series">Сериалы</a>
-                        <a class="sidebar-item" data-category="series-2026">Сериалы 2026</a>
-                        <a class="sidebar-item" data-category="series-2025">Сериалы 2025</a>
-                        <a class="sidebar-item" data-category="series-2024">Сериалы 2024</a>
-                        <a class="sidebar-item" data-category="best-series">Лучшие сериалы</a>
-                        <a class="sidebar-item" data-category="dorama">Дорамы</a>
-                        <a class="sidebar-item" data-category="films-new">Фильмы Новинки</a>
-                        <a class="sidebar-item" data-category="best-films">Лучшие фильмы</a>
-                        <a class="sidebar-item" data-category="ru-series">Русские сериалы</a>
-                        <a class="sidebar-item" data-category="ru-series-2026">Русские сериалы 2026</a>
-                        <a class="sidebar-item" data-category="ru-series-2025">Русские сериалы 2025</a>
-                        <a class="sidebar-item" data-category="best-ru-series">Лучшие Русские сериалы</a>
-
-                    </nav>
-                </aside>
-
+            <!-- ЗАГОЛОВОК СЕКЦИИ -->
+            <div class="section-header">
+                <h2 class="section-title" id="sectionTitle">Все дорамы</h2>
             </div>
 
-            <footer>
-                © 2026 <a href="index.html">Дорамы от Дианы</a> — Все права защищены.
-            </footer>
+            <!-- СЕТКА -->
+            <div class="movies-grid" id="moviesGrid"></div>
 
         </div>
+
+        <!-- САЙДБАР -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-title">Категории</div>
+            </div>
+            <nav class="sidebar-nav" id="sidebarNav">
+                <a class="category-item active" data-category="all">Все</a>
+                <div class="category-divider"></div>
+
+                <a class="category-item" data-category="cartoon">Мультфильмы</a>
+                <a class="category-item" data-category="comedy">Комедии</a>
+                <a class="category-item" data-category="best-films">Лучшие фильмы</a>
+                <a class="category-item" data-category="anime">Аниме</a>
+                <a class="category-item" data-category="action">Боевики</a>
+                <a class="category-item" data-category="drama">Драмы</a>
+                <a class="category-item" data-category="detective">Детективы</a>
+                <a class="category-item" data-category="fantasy">Фэнтези</a>
+                <a class="category-item" data-category="thriller">Триллеры</a>
+                <a class="category-item" data-category="horror">Ужасы</a>
+                <a class="category-item" data-category="sci-fi">Фантастика</a>
+                <a class="category-item" data-category="adventure">Приключения</a>
+                <a class="category-item" data-category="melodrama">Мелодрамы</a>
+                <a class="category-item" data-category="series">Сериалы</a>
+                <a class="category-item" data-category="dorama">Дорамы</a>
+
+                <div class="category-divider"></div>
+
+                <a class="category-item" data-category="films-2026">Фильмы 2026</a>
+                <a class="category-item" data-category="films-2025">Фильмы 2025</a>
+                <a class="category-item" data-category="films-2024">Фильмы 2024</a>
+                <a class="category-item" data-category="best-films">Лучшие фильмы</a>
+                <a class="category-item" data-category="series-2026">Сериалы 2026</a>
+                <a class="category-item" data-category="ru-series">Русские сериалы</a>
+                <a class="category-item" data-category="cartoon-series">Мультсериалы</a>
+            </nav>
+        </aside>
+
     </div>
 
+    <!-- ПОДВАЛ -->
+    <footer class="site-footer">
+        © 2026 <a href="index.html">Дорамы от Дианы</a> — Все права защищены.
+    </footer>
+
+    <!-- TOAST -->
     <div class="toast-container" id="toastContainer"></div>
 
     <script>
-        // ===== БАЗА ФИЛЬМОВ =====
+        // ===== БАЗА =====
         const MOVIES = [
             {
                 id: 'cartoon1',
                 title: 'Хитрый койот',
                 poster: 'images/hfd.jpg',
                 rating: 9.0,
+                year: 2024,
                 categories: ['cartoon', 'comedy', 'best-films'],
                 episodes: 1
             }
@@ -764,14 +863,20 @@
         let currentCategory = 'all';
         let showFavoritesOnly = false;
         let currentSearch = '';
-        let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+        let favorites = JSON.parse(localStorage.getItem('favorites_v2') || '[]');
 
+        // ===== СЕЛЕКТОРЫ =====
+        const moviesGrid = document.getElementById('moviesGrid');
+        const sidebarItems = document.querySelectorAll('.category-item');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const favoritesToggle = document.getElementById('favoritesToggle');
+        const resetHeroFilter = document.getElementById('resetHeroFilter');
+        const sectionTitle = document.getElementById('sectionTitle');
+
+        // ===== ЛОГИКА =====
         function saveFavorites() {
-            localStorage.setItem('favorites', JSON.stringify(favorites));
-            updateFavCount();
-        }
-
-        function updateFavCount() {
+            localStorage.setItem('favorites_v2', JSON.stringify(favorites));
             document.getElementById('favCount').textContent = favorites.length;
         }
 
@@ -779,7 +884,7 @@
             let result = [...MOVIES];
 
             if (currentCategory !== 'all') {
-                result = result.filter(m => m.categories && m.categories.includes(currentCategory));
+                result = result.filter(m => m.categories.includes(currentCategory));
             }
 
             if (showFavoritesOnly) {
@@ -794,206 +899,157 @@
             return result;
         }
 
-        function renderGrid() {
-            const grid = document.getElementById('grid');
+        function renderMovies() {
             const filtered = getFilteredMovies();
 
+            // Обновляем заголовок
+            if (showFavoritesOnly) {
+                sectionTitle.textContent = '❤️ Избранное';
+            } else if (currentCategory !== 'all') {
+                const activeItem = document.querySelector(`.category-item[data-category="${currentCategory}"]`);
+                sectionTitle.textContent = activeItem ? activeItem.textContent : 'Категория';
+            } else if (currentSearch.trim()) {
+                sectionTitle.textContent = `Результаты: "${currentSearch}"`;
+            } else {
+                sectionTitle.textContent = 'Все дорамы';
+            }
+
             if (filtered.length === 0) {
+                let message = 'Ничего не найдено';
+                let icon = '🔍';
                 if (showFavoritesOnly) {
-                    grid.innerHTML = '<div class="no-results"><span class="icon">💔</span>В избранном пока ничего нет</div>';
+                    message = 'В избранном пока ничего нет';
+                    icon = '💔';
                 } else if (currentCategory !== 'all') {
-                    grid.innerHTML = '<div class="no-results"><span class="icon">📂</span>В этой категории пока пусто</div>';
-                } else {
-                    grid.innerHTML = '<div class="no-results"><span class="icon">🔍</span>Ничего не найдено</div>';
+                    message = 'В этой категории пока пусто';
+                    icon = '📂';
                 }
+                moviesGrid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="icon">${icon}</div>
+                        <div class="title">${message}</div>
+                    </div>
+                `;
                 return;
             }
 
-            grid.innerHTML = filtered.map(m => {
+            moviesGrid.innerHTML = filtered.map(m => {
                 const isFav = favorites.includes(m.id);
                 return `
-                    <div class="card" data-id="${m.id}">
-                        <div class="card-poster-wrap">
+                    <div class="movie-card" onclick="location.href='watch.html?drama=${m.id}'">
+                        <div class="movie-poster">
                             <img src="${m.poster}" alt="${m.title}" onerror="this.src='images/Log.png'">
-                            <div class="card-rating">
-                                <span class="star">★</span> ${m.rating.toFixed(1)}
-                            </div>
-                            <div class="card-fav ${isFav ? 'favorited' : ''}" data-fav-id="${m.id}">
+                            <div class="movie-rating">★ ${m.rating.toFixed(1)}</div>
+                            <button class="movie-fav ${isFav ? 'favorited' : ''}"
+                                    data-id="${m.id}"
+                                    onclick="event.stopPropagation(); toggleFavorite('${m.id}')">
                                 ${isFav ? '❤️' : '🤍'}
-                            </div>
+                            </button>
                         </div>
-                        <div class="card-title">${m.title}</div>
-                        <a class="card-watch-btn" href="watch.html?drama=${m.id}">
-                            ▶ Смотреть все серии
-                        </a>
+                        <div class="movie-info">
+                            <div class="movie-title">${m.title}</div>
+                            <div class="movie-meta">
+                                <span>📅 ${m.year}</span>
+                                <span>🎬 ${m.episodes} сер.</span>
+                            </div>
+                            <a class="movie-watch-btn" href="watch.html?drama=${m.id}" onclick="event.stopPropagation()">
+                                ▶ Смотреть
+                            </a>
+                        </div>
                     </div>
                 `;
             }).join('');
-
-            grid.querySelectorAll('.card-fav').forEach(btn => {
-                btn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    e.preventDefault();
-                    toggleFavorite(btn.dataset.favId);
-                });
-            });
         }
 
         function toggleFavorite(id) {
             const idx = favorites.indexOf(id);
             if (idx > -1) {
                 favorites.splice(idx, 1);
-                showToast('Удалено из избранного');
+                showToast('Удалено из избранного', 'error');
             } else {
                 favorites.push(id);
-                showToast('❤️ Добавлено в избранное');
+                showToast('Добавлено в избранное', 'success');
             }
             saveFavorites();
-            renderGrid();
+            renderMovies();
         }
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+        function showToast(msg, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = msg;
+            document.getElementById('toastContainer').appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
         }
 
-        // ===== КАТЕГОРИИ =====
-        const sidebarItems = document.querySelectorAll('.sidebar-item');
+        function scrollToMovies() {
+            moviesGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
 
+        // ===== ОБРАБОТЧИКИ =====
         sidebarItems.forEach(item => {
-            item.addEventListener('click', (e) => {
-                e.preventDefault();
+            item.addEventListener('click', () => {
                 sidebarItems.forEach(i => i.classList.remove('active'));
                 item.classList.add('active');
                 currentCategory = item.dataset.category;
                 showFavoritesOnly = false;
-                document.getElementById('favoritesToggle').classList.remove('active');
-                updateResetButton();
-                renderGrid();
-                scrollToTop();
+                favoritesToggle.classList.remove('active');
+                renderMovies();
+                scrollToMovies();
             });
         });
 
-        // ===== ИЗБРАННОЕ =====
-        document.getElementById('favoritesToggle').addEventListener('click', function() {
+        favoritesToggle.addEventListener('click', () => {
             showFavoritesOnly = !showFavoritesOnly;
-            this.classList.toggle('active', showFavoritesOnly);
-
+            favoritesToggle.classList.toggle('active', showFavoritesOnly);
             if (showFavoritesOnly) {
                 sidebarItems.forEach(i => i.classList.remove('active'));
-                document.querySelector('.sidebar-item[data-category="all"]').classList.add('active');
+                sidebarItems[0].classList.add('active');
                 currentCategory = 'all';
             }
-            updateResetButton();
-            renderGrid();
-            scrollToTop();
+            renderMovies();
+            scrollToMovies();
         });
 
-        // ===== СБРОС =====
-        document.getElementById('resetFilter').addEventListener('click', () => {
+        resetHeroFilter.addEventListener('click', () => {
             currentCategory = 'all';
             showFavoritesOnly = false;
             currentSearch = '';
-            document.getElementById('searchInput').value = '';
+            searchInput.value = '';
             sidebarItems.forEach(i => i.classList.remove('active'));
-            document.querySelector('.sidebar-item[data-category="all"]').classList.add('active');
-            document.getElementById('favoritesToggle').classList.remove('active');
-            updateResetButton();
-            renderGrid();
-            scrollToTop();
+            sidebarItems[0].classList.add('active');
+            favoritesToggle.classList.remove('active');
+            renderMovies();
+            showToast('Фильтры сброшены', 'info');
         });
 
-        function updateResetButton() {
-            const btn = document.getElementById('resetFilter');
-            if (currentCategory !== 'all' || showFavoritesOnly || currentSearch.trim()) {
-                btn.classList.add('visible');
-            } else {
-                btn.classList.remove('visible');
-            }
-        }
-
-        // ===== ПОИСК =====
-        const searchInput = document.getElementById('searchInput');
-        const searchBtn = document.getElementById('searchBtn');
-        let isAnimating = false;
-
-        function performSearch() {
-            if (isAnimating) return;
+        searchBtn.addEventListener('click', () => {
             currentSearch = searchInput.value;
-            isAnimating = true;
-            searchBtn.classList.remove('returning');
-            searchBtn.classList.add('animating');
-
-            setTimeout(() => {
-                renderGrid();
-                updateResetButton();
-                scrollToTop();
-                searchBtn.classList.remove('animating');
-                searchBtn.classList.add('returning');
-                setTimeout(() => {
-                    searchBtn.classList.remove('returning');
-                    isAnimating = false;
-                }, 900);
-            }, 900);
-        }
-
-        searchBtn.addEventListener('click', performSearch);
-        searchInput.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') { e.preventDefault(); performSearch(); }
+            renderMovies();
         });
 
+        searchInput.addEventListener('keydown', e => {
+            if (e.key === 'Enter') {
+                currentSearch = searchInput.value;
+                renderMovies();
+            }
+        });
+
+        // Живой поиск при очистке
         searchInput.addEventListener('input', () => {
             if (!searchInput.value.trim() && currentSearch.trim()) {
                 currentSearch = '';
-                renderGrid();
-                updateResetButton();
+                renderMovies();
             }
         });
 
-        function showToast(msg) {
-            const container = document.getElementById('toastContainer');
-            const toast = document.createElement('div');
-            toast.className = 'toast';
-            toast.textContent = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 2500);
-        }
-
-        // ===== МАСШТАБИРОВАНИЕ =====
-        function fitToScreen() {
-            const wrap = document.getElementById('desktopWrap');
-            const zoomWrap = document.getElementById('zoomWrap');
-            const DESIGN_WIDTH = 1300;
-            const screenWidth = window.innerWidth;
-            let scale = screenWidth / DESIGN_WIDTH;
-            if (scale > 1) scale = 1;
-            zoomWrap.style.zoom = scale;
-            if (typeof zoomWrap.style.zoom === 'undefined') {
-                wrap.style.transform = `scale(${scale})`;
-                wrap.style.transformOrigin = 'top left';
-                wrap.style.width = DESIGN_WIDTH + 'px';
-                const realHeight = wrap.scrollHeight;
-                zoomWrap.style.height = (realHeight * scale) + 'px';
-            }
-        }
-        window.addEventListener('resize', fitToScreen);
-        window.addEventListener('load', fitToScreen);
-        window.addEventListener('orientationchange', () => setTimeout(fitToScreen, 200));
-        fitToScreen();
-        setTimeout(fitToScreen, 100);
-        setTimeout(fitToScreen, 500);
-        setTimeout(fitToScreen, 1500);
-
         // ===== ТЕМА =====
         const themeBtn = document.getElementById('themeBtn');
-        let theme = localStorage.getItem('theme') || 'dark';
+        let theme = localStorage.getItem('theme_v2') || 'dark';
 
         function applyTheme(t) {
             document.documentElement.setAttribute('data-theme', t);
-            localStorage.setItem('theme', t);
-            theme = t;
+            localStorage.setItem('theme_v2', t);
             themeBtn.textContent = t === 'dark' ? '🌙' : '☀️';
         }
 
@@ -1001,11 +1057,11 @@
             applyTheme(theme === 'dark' ? 'light' : 'dark');
         });
 
-        applyTheme(theme);
-
         // ===== СТАРТ =====
-        updateFavCount();
-        renderGrid();
+        applyTheme(theme);
+        saveFavorites();
+        renderMovies();
     </script>
+
 </body>
 </html>
